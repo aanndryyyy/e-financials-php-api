@@ -1,0 +1,22 @@
+{
+  "name": "e-financials/php-client",
+  "type": "library",
+  "require": {
+      "php": ">=8.1.0",
+      "guzzlehttp/guzzle": "^7.5"
+  },
+  "require-dev": {
+      "squizlabs/php_codesniffer": "^3.7.1",
+      "phpunit/phpunit": "^10.0.4"
+  },
+  "autoload": {
+      "psr-4": {
+          "EFinancialsClient\\": "src/"
+      }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "EFinancialsClient\\Tests\\": "tests/"
+      }
+  }
+}
