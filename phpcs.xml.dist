@@ -1,5 +1,5 @@
-<!-- Initial setup from https://www.twilio.com/blog/improving-php-code-quality-php-codesniffer-phpcs-laravel -->
 <?xml version="1.0"?>
+  <!-- Initial setup from https://www.twilio.com/blog/improving-php-code-quality-php-codesniffer-phpcs-laravel -->
 
   <ruleset name="PHP_CodeSniffer">
 
