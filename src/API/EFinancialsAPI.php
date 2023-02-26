@@ -26,7 +26,7 @@ class EFinancialsAPI
         $data = $this->apiKeyId . ':' . $this->createAuthQuerytime() . ':' . $path;
         $key = $this->apiKeyPassword;
 
-        $requestSignature = base64_encode(hash_hmac('sha384', $data, $key));
+        $requestSignature = base64_encode(hash_hmac('sha384', $data, $key, true));
         $authKey = $this->apiKeyPublic . ':' . $requestSignature;
 
         return $authKey;
