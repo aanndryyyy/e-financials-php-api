@@ -12,11 +12,17 @@
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
-			"settings": {},
+			"settings": {
+				"phpstan.options": [ "--xdebug" ],
+				"phpstan.configFile": "phpstan.dist.neon,phpstan.neon.dist,phpstan.neon",
+				"psalm.psalmScriptPath": "vendor/bin/psalm-language-server"
+			},
 			"extensions": [
 				"streetsidesoftware.code-spell-checker",
 				"shevaua.phpcs",
-				"editorconfig.editorconfig"
+				"editorconfig.editorconfig",
+				"sanderronde.phpstan-vscode",
+				"getpsalm.psalm-vscode-plugin"
 			]
 		}
 	},
@@ -34,7 +40,10 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
-	"postCreateCommand": "echo \"xdebug.log = ${containerWorkspaceFolder}/xdebug.log\" | sudo tee -a /usr/local/etc/php/conf.d/xdebug.ini > /dev/null"
+	"postCreateCommand": {
+		"xdebug-fix": "echo \"xdebug.log = ${containerWorkspaceFolder}/xdebug.log\" | sudo tee -a /usr/local/etc/php/conf.d/xdebug.ini > /dev/null",
+		"dependencies": "composer install"
+	}
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"

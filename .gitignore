@@ -3,4 +3,5 @@
 .vscode
 composer.lock
 /vendor/
+/vendor-bin/**/vendor/
 *.log
