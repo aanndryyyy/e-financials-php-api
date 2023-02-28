@@ -115,11 +115,4 @@ class EFinancialsAPI
 
         return $result;
 }
-
-$test = new EFinancialsAPI();
-$test->request('GET', 'v1/clients');
-
-
-
-
-
+}
