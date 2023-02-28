@@ -31,9 +31,9 @@ class EFinancialsAPI
      * Creates authorization key for HTTP header.
      * For more detailed description check e-Financials API doc.
      *
-     * $param string $path relative path of url request.
+     * @param string $path Relative path of url request.
      */
-    public function createAuthKey( $path )
+    public function createAuthKey(string $path): string
     {
         $data = $this->apiKeyId . ':' . $this->createAuthQuerytime() . ':' . $path;
         $key = $this->apiKeyPassword;
@@ -47,7 +47,7 @@ class EFinancialsAPI
     /**
      * Creates current UTC timestamp.
      */
-    public function createAuthQuerytime()
+    public function createAuthQuerytime(): string
     {
         return gmdate("Y-m-d\TH:i:s");
     }
