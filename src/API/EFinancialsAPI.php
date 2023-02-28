@@ -2,6 +2,7 @@
 
 namespace EFinancialsClient\API;
 
+use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
@@ -38,5 +39,36 @@ class EFinancialsAPI
     public function createAuthQuerytime()
     {
         return gmdate("Y-m-d\TH:i:s");
+    }
+
+    /**
+     * Get the clients.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-clients e-Financials API
+     *
+     * @param int             $page Page of responses to return.
+     * @param DateTime|string $modifiedSince Return only objects modified since provided timestamp.
+     *
+     * @return mixed
+     */
+    public function getClients(int $page = 1, DateTime|string $modifiedSince = ''): mixed
+    {
+        $query = [];
+
+        if ($page !== 1) {
+            $query['page'] = $page;
+        }
+
+        if ($modifiedSince !== '') {
+            $query['modified_since'] = $modifiedSince;
+        }
+
+        if ($modifiedSince instanceof DateTime) {
+            $query['modified_since'] = $modifiedSince->format(\DateTimeInterface::ATOM);
+        }
+
+        $response = $this->request('GET', 'clients', $query);
+
+        return $response;
     }
 }
