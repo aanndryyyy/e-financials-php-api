@@ -4,6 +4,7 @@ namespace EFinancialsClient\API;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 class EFinancialsAPI
 {
@@ -52,47 +53,67 @@ class EFinancialsAPI
     }
 
     /**
+     * The universal request method.
      *
-     * $param string $method type of HTTP request method.
-     * $param string $endpoint relative path of url request.
-     * $param array $queryParams array of key-value pairs... GuzzleGm on kindlasti meetod olemas selleks, et concatida
-     * $param string $jsonBody ?
+     * @param string               $method The HTTP method.
+     * @param string               $endpoint The relative path of the request.
+     * @param array<string, mixed> $query The query parameters.
+     * @param mixed[]              $body The body. Will be converted to JSON.
      *
+     * @return mixed The response as array, error, or null.
      */
-    public function request( string $method, string $endpoint, array $queryParams = [], array $jsonBody = [] ) : array
+    public function request(string $method, string $endpoint, array $query = [], array $body = []): mixed
     {
-
-        $queryTime = $this->createAuthQuerytime();
-        $authKey   = $this->createAuthKey( $endpoint );
-
-        try {
-            $res = $this->request(
-                $method,
-                'https://demo-rmp-api.rik.ee/v1/clients',
-                [
-                    'headers' => [
-                        'Content-Type'     => 'application/json',
-                        'X-AUTH-QUERYTIME' => $queryTime,
-                        'X-AUTH-KEY'       => $authKey,
-                    ]
-                ]
-            );
-
-            echo ($res->getBody());
-
-        } catch ( RequestException $e ) {
-
-            $response = $e->getResponse();
-
-            if (!$response) {
-                echo( $e->getMessage());
-            }
-
-            return [$response]
+        if (is_null($this->client)) {
+            return null;
         }
 
-        return json_decode($response->getBody()->getContents(), true);;
+        $endpoint = '/' . $this->apiVersion . '/' . $endpoint;
+
+        $queryTime = $this->createAuthQuerytime();
+        $authKey   = $this->createAuthKey($endpoint);
+        $headers   = [
+                        'X-AUTH-QUERYTIME' => $queryTime,
+                        'X-AUTH-KEY'       => $authKey,
+        ];
+
+        $options = [
+            'headers' => $headers,
+        ];
+
+        if (count($query) !== 0) {
+            $options['query'] = $query;
+        }
+
+        if (count($body) !== 0) {
+            $options['json'] = $body;
+        }
+
+        try {
+            $response = $this->client->request($method, $endpoint, $options);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+
+            if ($response instanceof ResponseInterface) {
+                return $response->getBody()->getContents();
+            }
+
+            return null;
+        }
+
+        try {
+            $result = \json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR);
+        } catch (\ValueError $ve) {
+            return [
+                'internal_error' => $ve->getMessage(),
+            ];
+        } catch (\JsonException $je) {
+            return [
+                'internal_error' => $je->getMessage(),
+            ];
     }
+
+        return $result;
 }
 
 $test = new EFinancialsAPI();
