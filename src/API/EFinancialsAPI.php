@@ -8,12 +8,23 @@ use GuzzleHttp\Exception\RequestException;
 class EFinancialsAPI
 {
     public function __construct(
-        private ?Client $guzzle = null,
+        private ?Client $client = null,
         private string $apiKeyId = '',
         private string $apiKeyPublic = '',
         private string $apiKeyPassword = '',
-        private string $apiUrl = "https://demo-rmp-api.rik.ee"
-    ) {}
+        private string $apiUrl = "https://demo-rmp-api.rik.ee",
+        private string $apiVersion = "v1"
+    ) {
+
+        $this->client = new Client(
+            [
+                'base_uri' => $this->apiUrl,
+                'headers'  => [
+                    'Content-Type' => 'application/json',
+                ],
+            ]
+        );
+    }
 
     /**
      * Creates authorization key for HTTP header.
