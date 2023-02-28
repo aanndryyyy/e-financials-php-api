@@ -73,8 +73,8 @@ class EFinancialsAPI
         $queryTime = $this->createAuthQuerytime();
         $authKey   = $this->createAuthKey($endpoint);
         $headers   = [
-                        'X-AUTH-QUERYTIME' => $queryTime,
-                        'X-AUTH-KEY'       => $authKey,
+            'X-AUTH-QUERYTIME' => $queryTime,
+            'X-AUTH-KEY'       => $authKey,
         ];
 
         $options = [
