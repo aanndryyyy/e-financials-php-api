@@ -10,6 +10,32 @@
   <exclude-pattern>*/migrations/*</exclude-pattern>
 
   <!-- Our base rule: set to PSR12-->
-  <rule ref="PSR12"/>
+  <rule ref="PSR12">
+    <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+    <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
+    <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"/>
+    <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose"/>
+  </rule>
+
+  <rule ref="PSR2.Methods.FunctionCallSignature">
+    <properties>
+        <property name="requiredSpacesAfterOpen" value="1" />
+        <property name="requiredSpacesBeforeClose" value="1" />
+    </properties>
+  </rule>
+
+  <rule ref="PEAR.Functions.FunctionCallSignature">
+    <properties>
+        <property name="requiredSpacesAfterOpen" value="1" />
+        <property name="requiredSpacesBeforeClose" value="1" />
+    </properties>
+  </rule>
+
+  <rule ref="PSR2.ControlStructures.ControlStructureSpacing">
+    <properties>
+        <property name="requiredSpacesAfterOpen" value="1" />
+        <property name="requiredSpacesBeforeClose" value="1" />
+    </properties>
+  </rule>
 
 </ruleset>
