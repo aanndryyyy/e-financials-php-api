@@ -12,7 +12,7 @@ class EFinancialsAPI
         private string $apiKeyId = '',
         private string $apiKeyPublic = '',
         private string $apiKeyPassword = '',
-        private string $apiUrl = "https://demo-rmp-api.rik.ee",
+        private string $apiUrl = "https://demo-rmp-api.rik.ee"
     ) {}
 
     /**
@@ -39,4 +39,55 @@ class EFinancialsAPI
     {
         return gmdate("Y-m-d\TH:i:s");
     }
+
+    /**
+     *
+     * $param string $method type of HTTP request method.
+     * $param string $endpoint relative path of url request.
+     * $param array $queryParams array of key-value pairs... GuzzleGm on kindlasti meetod olemas selleks, et concatida
+     * $param string $jsonBody ?
+     *
+     */
+    public function request( string $method, string $endpoint, array $queryParams = [], array $jsonBody = [] ) : array
+    {
+
+        $queryTime = $this->createAuthQuerytime();
+        $authKey   = $this->createAuthKey( $endpoint );
+
+        try {
+            $res = $this->request(
+                $method,
+                'https://demo-rmp-api.rik.ee/v1/clients',
+                [
+                    'headers' => [
+                        'Content-Type'     => 'application/json',
+                        'X-AUTH-QUERYTIME' => $queryTime,
+                        'X-AUTH-KEY'       => $authKey,
+                    ]
+                ]
+            );
+
+            echo ($res->getBody());
+
+        } catch ( RequestException $e ) {
+
+            $response = $e->getResponse();
+
+            if (!$response) {
+                echo( $e->getMessage());
+            }
+
+            return [$response]
+        }
+
+        return json_decode($response->getBody()->getContents(), true);;
+    }
 }
+
+$test = new EFinancialsAPI();
+$test->request('GET', 'v1/clients');
+
+
+
+
+
