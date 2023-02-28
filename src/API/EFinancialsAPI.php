@@ -111,8 +111,8 @@ class EFinancialsAPI
             return [
                 'internal_error' => $je->getMessage(),
             ];
-    }
+        }
 
         return $result;
-}
+    }
 }
