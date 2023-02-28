@@ -33,12 +33,12 @@ class EFinancialsAPI
      *
      * @param string $path Relative path of url request.
      */
-    public function createAuthKey(string $path): string
+    public function createAuthKey( string $path ): string
     {
         $data = $this->apiKeyId . ':' . $this->createAuthQuerytime() . ':' . $path;
         $key = $this->apiKeyPassword;
 
-        $requestSignature = base64_encode(hash_hmac('sha384', $data, $key, true));
+        $requestSignature = base64_encode( hash_hmac( 'sha384', $data, $key, true ) );
         $authKey = $this->apiKeyPublic . ':' . $requestSignature;
 
         return $authKey;
@@ -49,7 +49,7 @@ class EFinancialsAPI
      */
     public function createAuthQuerytime(): string
     {
-        return gmdate("Y-m-d\TH:i:s");
+        return gmdate( "Y-m-d\TH:i:s" );
     }
 
     /**
@@ -62,16 +62,16 @@ class EFinancialsAPI
      *
      * @return mixed The response as array, error, or null.
      */
-    public function request(string $method, string $endpoint, array $query = [], array $body = []): mixed
+    public function request( string $method, string $endpoint, array $query = [], array $body = [] ): mixed
     {
-        if (is_null($this->client)) {
+        if ( is_null( $this->client ) ) {
             return null;
         }
 
         $endpoint = '/' . $this->apiVersion . '/' . $endpoint;
 
         $queryTime = $this->createAuthQuerytime();
-        $authKey   = $this->createAuthKey($endpoint);
+        $authKey   = $this->createAuthKey( $endpoint );
         $headers   = [
             'X-AUTH-QUERYTIME' => $queryTime,
             'X-AUTH-KEY'       => $authKey,
@@ -81,20 +81,20 @@ class EFinancialsAPI
             'headers' => $headers,
         ];
 
-        if (count($query) !== 0) {
+        if ( count( $query ) !== 0 ) {
             $options['query'] = $query;
         }
 
-        if (count($body) !== 0) {
+        if ( count( $body ) !== 0 ) {
             $options['json'] = $body;
         }
 
         try {
-            $response = $this->client->request($method, $endpoint, $options);
-        } catch (RequestException $e) {
+            $response = $this->client->request( $method, $endpoint, $options );
+        } catch ( RequestException $e ) {
             $response = $e->getResponse();
 
-            if ($response instanceof ResponseInterface) {
+            if ( $response instanceof ResponseInterface ) {
                 return $response->getBody()->getContents();
             }
 
@@ -102,12 +102,12 @@ class EFinancialsAPI
         }
 
         try {
-            $result = \json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR);
-        } catch (\ValueError $ve) {
+            $result = \json_decode( $response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR );
+        } catch ( \ValueError $ve ) {
             return [
                 'internal_error' => $ve->getMessage(),
             ];
-        } catch (\JsonException $je) {
+        } catch ( \JsonException $je ) {
             return [
                 'internal_error' => $je->getMessage(),
             ];
