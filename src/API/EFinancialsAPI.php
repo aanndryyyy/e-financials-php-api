@@ -131,19 +131,19 @@ class EFinancialsAPI
     {
         $query = [];
 
-        if ($page !== 1) {
+        if ( $page !== 1 ) {
             $query['page'] = $page;
         }
 
-        if ($modifiedSince !== '') {
-            $query['modified_since'] = $modifiedSince;
+        if ( $modifiedSince !== '' ) {
+            // If $modifiedSince is a DateTime object, format it as an Atom string
+            // Otherwise, assign keep it as date string.
+            $query['modified_since'] = ($modifiedSince instanceof DateTime)
+                ? $modifiedSince -> format( \DateTimeInterface::ATOM )
+                : $modifiedSince;
         }
 
-        if ($modifiedSince instanceof DateTime) {
-            $query['modified_since'] = $modifiedSince->format(\DateTimeInterface::ATOM);
-        }
-
-        $response = $this->request('GET', 'clients', $query);
+        $response = $this -> request( 'GET', 'clients', $query );
 
         return $response;
     }
