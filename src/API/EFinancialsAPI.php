@@ -147,4 +147,19 @@ class EFinancialsAPI
 
         return $response;
     }
+
+    /**
+     * Get the clients.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
+     *
+     * @return mixed
+     */
+    public function getPurchaseArticles(): mixed
+    {
+
+        $response = $this -> request( 'GET', 'purchase_articles' );
+
+        return $response;
+    }
 }
