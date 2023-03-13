@@ -149,7 +149,7 @@ class EFinancialsAPI
     }
 
     /**
-     * Get the clients.
+     * Retrieve the purchase articles of the specified company.
      *
      * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
      *
