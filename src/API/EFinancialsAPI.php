@@ -2,6 +2,7 @@
 
 namespace EFinancialsClient\API;
 
+use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -114,5 +115,36 @@ class EFinancialsAPI
         }
 
         return $result;
+    }
+
+    /**
+     * Get the clients.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-clients e-Financials API
+     *
+     * @param int             $page Page of responses to return.
+     * @param DateTime|string $modifiedSince Return only objects modified since provided timestamp.
+     *
+     * @return mixed
+     */
+    public function getClients(int $page = 1, DateTime|string $modifiedSince = ''): mixed
+    {
+        $query = [];
+
+        if ( $page !== 1 ) {
+            $query['page'] = $page;
+        }
+
+        if ( $modifiedSince !== '' ) {
+            // If $modifiedSince is a DateTime object, format it as an Atom string
+            // Otherwise, assign keep it as date string.
+            $query['modified_since'] = ($modifiedSince instanceof DateTime)
+                ? $modifiedSince -> format( \DateTimeInterface::ATOM )
+                : $modifiedSince;
+        }
+
+        $response = $this -> request( 'GET', 'clients', $query );
+
+        return $response;
     }
 }
