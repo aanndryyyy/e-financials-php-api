@@ -147,4 +147,20 @@ class EFinancialsAPI
 
         return $response;
     }
+
+    /**
+     * Get a product.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-products_one
+     *
+     * @param int $id Product identificator.
+     *
+     * @return mixed
+     */
+    public function getProduct( int $id ): mixed
+    {
+        $response = $this->request( 'GET', 'products/' . $id );
+
+        return $response;
+    }
 }
