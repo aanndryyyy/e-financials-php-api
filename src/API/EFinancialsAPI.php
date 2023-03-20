@@ -147,4 +147,20 @@ class EFinancialsAPI
 
         return $response;
     }
+
+
+    /**
+     * Creates a new client.
+     *
+     * @param array $data array of body properties.
+     *
+     * @return mixed
+     */
+    public function createClient( array $data = []): mixed
+    {
+
+        $response = $this -> request( 'POST', 'clients', [], $data );
+
+        return $response;
+    }
 }
