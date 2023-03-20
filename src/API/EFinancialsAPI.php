@@ -148,37 +148,39 @@ class EFinancialsAPI
         return $response;
     }
 
-
     /**
-     * Creates a new client.
-     *
-     * @param array $parameters request parameters.
-     *
-     * @return mixed
-     */
+    * Creates a new client.
+    *
+    * @param array $requiredParameters required request parameters.
+    * @param array $parameters additional request parameters.
+    *
+    * @return mixed
+    *
+    */
     public function createClient(
-        bool $is_client,
-        bool $is_supplier,
-        string $name,
-        string $cl_code_country,
-        bool $is_member,
-        bool $send_invoice_to_email,
-        bool $send_invoice_to_accounting_email,
+        array $requiredParameters,
         array $parameters = []
     ): mixed {
 
-        $required_parameters = [
-            "is_client" => $is_client,
-            "is_supplier" => $is_supplier,
-            "name" => $name,
-            "cl_code_country" => $cl_code_country,
-            "is_member" => $is_member,
-            "send_invoice_to_email" => $send_invoice_to_email,
-            "send_invoice_to_accounting_email" => $send_invoice_to_accounting_email,
-        ];
+        $missingParameters = array_diff_key( array_flip ([
+            'is_client',
+            'is_supplier',
+            'name',
+            'cl_code_country',
+            'is_member',
+            'send_invoice_to_email',
+            'send_invoice_to_accounting_email',
+        ]), $requiredParameters );
 
-        $response = $this -> request( 'POST', 'clients', [], \array_merge( $required_parameters, $parameters ) );
 
-        return $response;
+        if ( count( $missingParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingParameters ) );
+
+            return [
+                'internal_error' => "Missing required parameter(s): $missingKeys",
+            ];
+        }
+
+        return $this->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
     }
 }
