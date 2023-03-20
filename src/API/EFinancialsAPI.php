@@ -152,14 +152,32 @@ class EFinancialsAPI
     /**
      * Creates a new client.
      *
-     * @param array $data array of body properties.
+     * @param array $parameters request parameters.
      *
      * @return mixed
      */
-    public function createClient( array $data = []): mixed
-    {
+    public function createClient(
+        bool $is_client,
+        bool $is_supplier,
+        string $name,
+        string $cl_code_country,
+        bool $is_member,
+        bool $send_invoice_to_email,
+        bool $send_invoice_to_accounting_email,
+        array $parameters = []
+    ): mixed {
 
-        $response = $this -> request( 'POST', 'clients', [], $data );
+        $required_parameters = [
+            "is_client" => $is_client,
+            "is_supplier" => $is_supplier,
+            "name" => $name,
+            "cl_code_country" => $cl_code_country,
+            "is_member" => $is_member,
+            "send_invoice_to_email" => $send_invoice_to_email,
+            "send_invoice_to_accounting_email" => $send_invoice_to_accounting_email,
+        ];
+
+        $response = $this -> request( 'POST', 'clients', [], \array_merge( $required_parameters, $parameters ) );
 
         return $response;
     }
