@@ -182,7 +182,9 @@ class EFinancialsAPI
         }
 
         return $this->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
+    }
 
+    /*
      * Retrieve the purchase articles of the specified company.
      *
      * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
@@ -193,7 +195,7 @@ class EFinancialsAPI
     {
 
         $response = $this -> request( 'GET', 'purchase_articles' );
-        
+
         return $response;
     }
 
