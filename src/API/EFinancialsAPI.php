@@ -182,5 +182,33 @@ class EFinancialsAPI
         }
 
         return $this->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
+
+     * Retrieve the purchase articles of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
+     *
+     * @return mixed
+     */
+    public function getPurchaseArticles(): mixed
+    {
+
+        $response = $this -> request( 'GET', 'purchase_articles' );
+        
+        return $response;
+    }
+
+    /**
+     * Retrieve the sale articles of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-sale_articles
+     *
+     * @return mixed
+     */
+    public function getSaleArticles(): mixed
+    {
+
+        $response = $this -> request( 'GET', 'sale_articles' );
+
+        return $response;
     }
 }
