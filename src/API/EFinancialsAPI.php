@@ -149,42 +149,6 @@ class EFinancialsAPI
     }
 
     /**
-    * Creates a new client.
-    *
-    * @param array $requiredParameters required request parameters.
-    * @param array $parameters additional request parameters.
-    *
-    * @return mixed
-    *
-    */
-    public function createClient(
-        array $requiredParameters,
-        array $parameters = []
-    ): mixed {
-
-        $missingParameters = array_diff_key( array_flip ([
-            'is_client',
-            'is_supplier',
-            'name',
-            'cl_code_country',
-            'is_member',
-            'send_invoice_to_email',
-            'send_invoice_to_accounting_email',
-        ]), $requiredParameters );
-
-
-        if ( count( $missingParameters ) !== 0 ) {
-            $missingKeys = implode( ', ', array_keys( $missingParameters ) );
-
-            return [
-                'internal_error' => "Missing required parameter(s): $missingKeys",
-            ];
-        }
-
-        return $this->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
-    }
-
-    /*
      * Retrieve the purchase articles of the specified company.
      *
      * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
