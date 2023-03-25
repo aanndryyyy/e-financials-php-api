@@ -2,11 +2,8 @@
 
 namespace EFinancialsClient\API;
 
-use DateTime;
-
 class Products extends AbstractAPI
 {
-
     /**
      * Get a product.
      *
