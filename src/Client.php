@@ -122,6 +122,11 @@ class Client
         return new API\Clients( $this );
     }
 
+    public function products(): API\Products
+    {
+        return new API\Products( $this );
+    }
+
     public function purchaseArticles(): API\PurchaseArticles
     {
         return new API\PurchaseArticles( $this );
