@@ -1,16 +1,16 @@
 <?php
 
-namespace EFinancialsClient\API;
+namespace EFinancialsClient;
 
-use DateTime;
-use GuzzleHttp\Client;
+use EFinancialsClient\API;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
-class EFinancialsAPI
+class Client
 {
     public function __construct(
-        private ?Client $client = null,
+        private ?GuzzleClient $httpClient = null,
         private string $apiKeyId = '',
         private string $apiKeyPublic = '',
         private string $apiKeyPassword = '',
@@ -18,7 +18,7 @@ class EFinancialsAPI
         private string $apiVersion = "v1"
     ) {
 
-        $this->client = new Client(
+        $this->httpClient = new GuzzleClient(
             [
                 'base_uri' => $this->apiUrl,
                 'headers'  => [
@@ -65,7 +65,7 @@ class EFinancialsAPI
      */
     public function request( string $method, string $endpoint, array $query = [], array $body = [] ): mixed
     {
-        if ( is_null( $this->client ) ) {
+        if ( is_null( $this->httpClient ) ) {
             return null;
         }
 
@@ -91,7 +91,7 @@ class EFinancialsAPI
         }
 
         try {
-            $response = $this->client->request( $method, $endpoint, $options );
+            $response = $this->httpClient->request( $method, $endpoint, $options );
         } catch ( RequestException $e ) {
             $response = $e->getResponse();
 
@@ -117,64 +117,23 @@ class EFinancialsAPI
         return $result;
     }
 
-    /**
-     * Get the clients.
-     *
-     * @see https://rmp-api.rik.ee/api.html#operation/get-clients e-Financials API
-     *
-     * @param int             $page Page of responses to return.
-     * @param DateTime|string $modifiedSince Return only objects modified since provided timestamp.
-     *
-     * @return mixed
-     */
-    public function getClients(int $page = 1, DateTime|string $modifiedSince = ''): mixed
+    public function clients(): API\Clients
     {
-        $query = [];
-
-        if ( $page !== 1 ) {
-            $query['page'] = $page;
-        }
-
-        if ( $modifiedSince !== '' ) {
-            // If $modifiedSince is a DateTime object, format it as an Atom string
-            // Otherwise, assign keep it as date string.
-            $query['modified_since'] = ($modifiedSince instanceof DateTime)
-                ? $modifiedSince -> format( \DateTimeInterface::ATOM )
-                : $modifiedSince;
-        }
-
-        $response = $this -> request( 'GET', 'clients', $query );
-
-        return $response;
+        return new API\Clients( $this );
     }
 
-    /**
-     * Retrieve the purchase articles of the specified company.
-     *
-     * @see https://rmp-api.rik.ee/api.html#operation/get-purchase_articles
-     *
-     * @return mixed
-     */
-    public function getPurchaseArticles(): mixed
+    public function products(): API\Products
     {
-
-        $response = $this -> request( 'GET', 'purchase_articles' );
-
-        return $response;
+        return new API\Products( $this );
     }
 
-    /**
-     * Retrieve the sale articles of the specified company.
-     *
-     * @see https://rmp-api.rik.ee/api.html#operation/get-sale_articles
-     *
-     * @return mixed
-     */
-    public function getSaleArticles(): mixed
+    public function purchaseArticles(): API\PurchaseArticles
     {
+        return new API\PurchaseArticles( $this );
+    }
 
-        $response = $this -> request( 'GET', 'sale_articles' );
-
-        return $response;
+    public function salesArticles(): API\SalesArticles
+    {
+        return new API\SalesArticles( $this );
     }
 }
