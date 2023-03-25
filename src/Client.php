@@ -117,9 +117,29 @@ class Client
         return $result;
     }
 
+    public function accountDimensions(): API\AccountDimensions
+    {
+        return new API\AccountDimensions( $this );
+    }
+
+    public function accounts(): API\Accounts
+    {
+        return new API\Accounts( $this );
+    }
+
     public function clients(): API\Clients
     {
         return new API\Clients( $this );
+    }
+
+    public function costProfitCentres(): API\CostProfitCentres
+    {
+        return new API\CostProfitCentres( $this );
+    }
+
+    public function currencies(): API\Currencies
+    {
+        return new API\Currencies( $this );
     }
 
     public function products(): API\Products
