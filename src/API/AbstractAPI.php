@@ -16,6 +16,5 @@ abstract class AbstractAPI
     public function __construct(
         public Client $client
     ) {
-        $this->client = $client;
     }
 }
