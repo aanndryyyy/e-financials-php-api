@@ -169,4 +169,32 @@ class Products extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Deactivate one specific product of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-products_one_deactivate
+     *
+     * @param int $id Product identificator.
+     */
+    public function deactivate( int $id ): mixed
+    {
+        $response = $this->client->request( 'PATCH', 'products/' . $id . '/deactivate' );
+
+        return $response;
+    }
+
+    /**
+     * Reactivate one specific product of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-products_one_reactivate
+     *
+     * @param int $id Product identificator.
+     */
+    public function reactivate( int $id ): mixed
+    {
+        $response = $this->client->request( 'PATCH', 'products/' . $id . '/reactivate' );
+
+        return $response;
+    }
 }
