@@ -153,4 +153,20 @@ class Products extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Delete one specific product of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/delete-products_one
+     *
+     * @param int $id Product identificator.
+     *
+     * @return mixed
+     */
+    public function delete( int $id ): mixed
+    {
+        $response = $this->client->request( 'DELETE', 'products/' . $id );
+
+        return $response;
+    }
 }
