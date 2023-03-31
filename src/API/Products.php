@@ -145,7 +145,7 @@ class Products extends AbstractAPI
         ];
 
         $response = $this->client->request(
-            'POST',
+            'PATCH',
             'products/' . $id,
             [],
             \array_merge( $required_parameters, $parameters )
