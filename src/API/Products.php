@@ -137,18 +137,29 @@ class Products extends AbstractAPI
     public function update( int $id, array $parameters = [] ): mixed
     {
 
-        // TODO: Check for required items?
+        $missingRequiredParameters = array_diff_key(
+            array_flip(
+                [
+                    'name',
+                    'code',
+                ]
+            ),
+            $parameters
+        );
 
-        $required_parameters = [
-            "name",
-            "code",
-        ];
+        if ( count( $missingRequiredParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingRequiredParameters ) );
+
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
+        }
 
         $response = $this->client->request(
             'PATCH',
             'products/' . $id,
             [],
-            \array_merge( $required_parameters, $parameters )
+            $parameters,
         );
 
         return $response;
