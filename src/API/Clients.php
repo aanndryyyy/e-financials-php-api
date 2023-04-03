@@ -7,9 +7,9 @@ use DateTime;
 class Clients extends AbstractAPI
 {
     /**
-     * Get the clients.
+     * Get all the clients.
      *
-     * @see https://rmp-api.rik.ee/api.html#operation/get-clients e-Financials API
+     * @see https://rmp-api.rik.ee/api.html#operation/get-clients
      *
      * @param int             $page Page of responses to return.
      * @param DateTime|string $modifiedSince Return only objects modified since provided timestamp.
@@ -33,6 +33,22 @@ class Clients extends AbstractAPI
         }
 
         $response = $this->client->request( 'GET', 'clients', $query );
+
+        return $response;
+    }
+
+    /**
+     * Get a client.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-clients_one
+     *
+     * @param int $id Client identificator.
+     *
+     * @return mixed
+     */
+    public function get( int $id ): mixed
+    {
+        $response = $this->client->request( 'GET', 'clients/' . $id );
 
         return $response;
     }
