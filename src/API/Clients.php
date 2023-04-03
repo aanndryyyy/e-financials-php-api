@@ -87,7 +87,15 @@ class Clients extends AbstractAPI
             ];
         }
 
-        return $this->client->request( 'POST', 'clients', [], $parameters );
+
+        $response = $this->client->request(
+            'POST',
+            'clients',
+            [],
+            $parameters
+        );
+
+        return $response;
     }
 
     /**
