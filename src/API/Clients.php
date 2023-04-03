@@ -124,7 +124,14 @@ class Clients extends AbstractAPI
             ];
         }
 
-        return $this->client->request( 'PATCH', 'clients/' . $id, [], $parameters );
+        $response = $this->client->request(
+            'PATCH',
+            'clients/' . $id,
+            [],
+            $parameters
+        );
+
+        return $response
     }
 
      /**
