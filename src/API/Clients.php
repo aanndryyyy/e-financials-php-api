@@ -94,6 +94,44 @@ class Clients extends AbstractAPI
         return $this->client->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
     }
 
+    /**
+    * Modify one specific client.
+    *
+    * @see https://rmp-api.rik.ee/api.html#operation/patch-clients_one
+    *
+    * @param array<string, mixed> $requiredParameters required request parameters.
+    * @param array<string, mixed> $parameters additional request parameters.
+    *
+    * @return mixed
+    */
+    public function update( int $id, array $parameters ): mixed {
+
+        $missingParameters = array_diff_key(
+            array_flip(
+                [
+                    'is_client',
+                    'is_supplier',
+                    'name',
+                    'cl_code_country',
+                    'is_member',
+                    'send_invoice_to_email',
+                    'send_invoice_to_accounting_email',
+                ]
+            ),
+            $parameters
+        );
+
+        if ( count( $missingParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingParameters ) );
+
+            return [
+                'internal_error' => "Missing required parameter(s): $missingKeys",
+            ];
+        }
+
+        return $this->client->request( 'PATCH', 'clients/' . $id, [], $parameters );
+    }
+
      /**
      * Delete one specific Client.
      *
