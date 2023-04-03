@@ -78,4 +78,19 @@ class Clients extends AbstractAPI
         return $this->client->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
     }
 
+     /**
+     * Delete one specific Client.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/delete-clients_one
+     *
+     * @param int $id Client identificator.
+     *
+     * @return mixed
+     */
+    public function delete( int $id ): mixed
+    {
+        $response = $this->client->request( 'DELETE', 'clients/' . $id );
+
+        return $response;
+    }
 }
