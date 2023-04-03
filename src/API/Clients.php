@@ -58,15 +58,11 @@ class Clients extends AbstractAPI
     *
     * @see https://rmp-api.rik.ee/api.html#operation/post-clients
     *
-    * @param array<string, mixed> $requiredParameters required request parameters.
-    * @param array<string, mixed> $parameters additional request parameters.
+    * @param array<string, mixed> $parameters all request parameters.
     *
     * @return mixed
     */
-    public function create(
-        array $requiredParameters,
-        array $parameters = []
-    ): mixed {
+    public function create( array $parameters = [] ): mixed {
 
         $missingParameters = array_diff_key(
             array_flip(
@@ -80,7 +76,7 @@ class Clients extends AbstractAPI
                     'send_invoice_to_accounting_email',
                 ]
             ),
-            $requiredParameters
+            $parameters
         );
 
         if ( count( $missingParameters ) !== 0 ) {
@@ -91,7 +87,7 @@ class Clients extends AbstractAPI
             ];
         }
 
-        return $this->client->request( 'POST', 'clients', [], array_merge( $requiredParameters, $parameters ) );
+        return $this->client->request( 'POST', 'clients', [], $parameters );
     }
 
     /**
@@ -99,8 +95,7 @@ class Clients extends AbstractAPI
     *
     * @see https://rmp-api.rik.ee/api.html#operation/patch-clients_one
     *
-    * @param array<string, mixed> $requiredParameters required request parameters.
-    * @param array<string, mixed> $parameters additional request parameters.
+    * @param array<string, mixed> $parameters all request parameters.
     *
     * @return mixed
     */
