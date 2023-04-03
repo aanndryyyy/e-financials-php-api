@@ -163,7 +163,7 @@ class Clients extends AbstractAPI
     }
 
     /**
-     * Deactivate one specific client.
+     * Reactivate one specific client.
      *
      * @see https://rmp-api.rik.ee/api.html#operation/patch-clients_one_reactivate
      *
