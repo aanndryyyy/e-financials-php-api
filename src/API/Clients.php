@@ -131,7 +131,7 @@ class Clients extends AbstractAPI
             $parameters
         );
 
-        return $response
+        return $response;
     }
 
      /**
