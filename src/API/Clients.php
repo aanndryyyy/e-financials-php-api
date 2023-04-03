@@ -147,4 +147,18 @@ class Clients extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Deactivate one specific client.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-clients_one_deactivate
+     *
+     * @param int $id Client identificator.
+     */
+    public function deactivate( int $id ): mixed
+    {
+        $response = $this->client->request( 'PATCH', 'clients/' . $id . '/deactivate' );
+
+        return $response;
+    }
 }
