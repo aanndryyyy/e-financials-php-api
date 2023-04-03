@@ -161,4 +161,18 @@ class Clients extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Deactivate one specific client.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-clients_one_reactivate
+     *
+     * @param int $id Client identificator.
+     */
+    public function reactivate( int $id ): mixed
+    {
+        $response = $this->client->request( 'PATCH', 'clients/' . $id . '/reactivate' );
+
+        return $response;
+    }
 }
