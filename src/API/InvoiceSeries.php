@@ -131,4 +131,19 @@ class InvoiceSeries extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Retrieve the invoice settings of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-invoice_info
+     *
+     * @return mixed
+     */
+    public function allSettings(): mixed
+    {
+
+        $response = $this->client->request( 'GET', 'invoice_info' );
+
+        return $response;
+    }
 }
