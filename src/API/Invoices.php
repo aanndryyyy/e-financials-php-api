@@ -170,7 +170,7 @@ class Invoices extends AbstractAPI
      *
      * @return mixed
      */
-    public function updateSettings( $parameters ): mixed
+    public function updateSettings( array $parameters ): mixed
     {
 
         $response = $this->client->request(
