@@ -146,4 +146,40 @@ class InvoiceSeries extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Update the invoice settings of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-invoice_info
+     *
+     * @param array<string,mixed>|array{
+     *
+     *   "address": string,
+     *   "email": string,
+     *   "phone": string,
+     *   "fax": string,
+     *   "webpage": string,
+     *   "cl_templates_id": 1,
+     *   "invoice_company_name": string,
+     *   "invoice_email_subject": string,
+     *   "invoice_email_body": string,
+     *   "balance_email_subject": string,
+     *   "balance_email_body": string,
+     *   "balance_document_footer": string
+     * } $parameters
+     *
+     * @return mixed
+     */
+    public function updateSettings( $parameters ): mixed
+    {
+
+        $response = $this->client->request(
+            'PATCH',
+            'invoice_info',
+            [],
+            $parameters
+        );
+
+        return $response;
+    }
 }
