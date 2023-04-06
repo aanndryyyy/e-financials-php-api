@@ -157,8 +157,8 @@ class Client
         return new API\SalesArticles( $this );
     }
 
-    public function invoiceSeries(): API\InvoiceSeries
+    public function invoices(): API\Invoices
     {
-        return new API\InvoiceSeries( $this );
+        return new API\Invoices( $this );
     }
 }

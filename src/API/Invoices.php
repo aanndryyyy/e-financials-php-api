@@ -2,7 +2,7 @@
 
 namespace EFinancialsClient\API;
 
-class InvoiceSeries extends AbstractAPI
+class Invoices extends AbstractAPI
 {
     /**
      * Retrieve the invoice series list of the specified company.
