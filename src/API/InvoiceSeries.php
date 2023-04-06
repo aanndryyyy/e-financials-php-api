@@ -82,4 +82,53 @@ class InvoiceSeries extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Modify one specific invoice series of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-invoice_series_one
+     *
+     * @param array<string,mixed>|array{
+     *   "is_active": true,
+     *   "is_default": false,
+     *   "number_prefix": string,
+     *   "number_start_value": 1,
+     *   "term_days": 28,
+     *   "overdue_charge": 0.15,
+     * } $parameters
+     *
+     * @return mixed
+     */
+    public function update( int $id, array $parameters ): mixed {
+
+        $missingParameters = array_diff_key(
+            array_flip(
+                [
+                    'is_active',
+                    'is_default',
+                    'number_prefix',
+                    'number_start_value',
+                    'term_days',
+                ]
+            ),
+            $parameters
+        );
+
+        if ( count( $missingParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingParameters ) );
+
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
+        }
+
+        $response = $this->client->request(
+            'PATCH',
+            'invoice_series/' . $id,
+            [],
+            $parameters
+        );
+
+        return $response;
+    }
 }
