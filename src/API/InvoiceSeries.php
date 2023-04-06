@@ -18,4 +18,19 @@ class InvoiceSeries extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Retrieve one specific invoice series of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-invoice_series_one
+     *
+     * @return mixed
+     */
+    public function get( int $id ): mixed
+    {
+
+        $response = $this->client->request( 'GET', 'invoice_series/' . $id );
+
+        return $response;
+    }
 }
