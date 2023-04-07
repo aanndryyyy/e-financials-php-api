@@ -82,9 +82,9 @@ class Clients extends AbstractAPI
         if ( count( $missingParameters ) !== 0 ) {
             $missingKeys = implode( ', ', array_keys( $missingParameters ) );
 
-            return [
-                'internal_error' => "Missing required parameter(s): $missingKeys",
-            ];
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
         }
 
 
@@ -127,9 +127,9 @@ class Clients extends AbstractAPI
         if ( count( $missingParameters ) !== 0 ) {
             $missingKeys = implode( ', ', array_keys( $missingParameters ) );
 
-            return [
-                'internal_error' => "Missing required parameter(s): $missingKeys",
-            ];
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
         }
 
         $response = $this->client->request(
