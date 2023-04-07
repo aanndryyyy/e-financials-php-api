@@ -153,7 +153,6 @@ class Invoices extends AbstractAPI
      * @see https://rmp-api.rik.ee/api.html#operation/patch-invoice_info
      *
      * @param array<string,mixed>|array{
-     *
      *   "address": string,
      *   "email": string,
      *   "phone": string,
