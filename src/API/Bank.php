@@ -18,4 +18,19 @@ class Bank extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Retrieve one specific bank account of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-bank_accounts_one
+     *
+     * @return mixed
+     */
+    public function get( int $id ): mixed
+    {
+
+        $response = $this->client->request( 'GET', 'bank_accounts/' . $id );
+
+        return $response;
+    }
 }
