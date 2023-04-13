@@ -156,4 +156,9 @@ class Client
     {
         return new API\SalesArticles( $this );
     }
+
+    public function invoices(): API\Invoices
+    {
+        return new API\Invoices( $this );
+    }
 }
