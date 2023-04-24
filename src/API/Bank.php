@@ -92,9 +92,9 @@ class Bank extends AbstractAPI
     }
 
     /**
-     * Modify one specific invoice series of the specified company.
+     * Modify one specific bank account of the specified company.
      *
-     * @see https://rmp-api.rik.ee/api.html#operation/patch-invoice_series_one
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-bank_accounts_one
      *
      * @param array<string,mixed>|array{
      *  "account_name_eng": "Swedbank AS EE123456780012345678",
@@ -118,7 +118,8 @@ class Bank extends AbstractAPI
      *
      * @return mixed
      */
-    public function update( int $id, array $parameters ): mixed {
+    public function update( int $id, array $parameters ): mixed
+    {
 
         $missingParameters = array_diff_key(
             array_flip(
@@ -144,6 +145,22 @@ class Bank extends AbstractAPI
             [],
             $parameters
         );
+
+        return $response;
+    }
+
+    /**
+     * Delete one specific bank account of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-bank_accounts_one
+     *
+     * @param int $id Bank account identificator.
+     *
+     * @return mixed
+     */
+    public function delete( int $id ): mixed
+    {
+        $response = $this->client->request( 'DELETE', 'bank_accounts/' . $id );
 
         return $response;
     }
