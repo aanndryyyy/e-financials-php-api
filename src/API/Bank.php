@@ -33,4 +33,44 @@ class Bank extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Create a new bank account of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/post-bank_accounts
+     *
+     * @param array<string,mixed>|array{
+     * } $parameters
+     *
+     * @return mixed
+     */
+    public function create( array $parameters = [] ): mixed
+    {
+        $missingRequiredParameters = array_diff_key(
+            array_flip(
+                [
+                    'account_name_est',
+                    'account_no',
+                ]
+            ),
+            $parameters
+        );
+
+        if ( count( $missingRequiredParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingRequiredParameters ) );
+
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
+        }
+
+        $response = $this->client->request(
+            'POST',
+            'bank_accounts',
+            [],
+            $parameters
+        );
+
+        return $response;
+    }
 }
