@@ -40,6 +40,23 @@ class Bank extends AbstractAPI
      * @see https://rmp-api.rik.ee/api.html#operation/post-bank_accounts
      *
      * @param array<string,mixed>|array{
+     *  "account_name_eng": "Swedbank AS EE123456780012345678",
+     *  "account_name_est": "Swedbank AS EE123456780012345678",
+     *  "account_no": "EE123456780012345678",
+     *  "accounts_dimensions_id": 2,
+     *  "bank_name": null,
+     *  "bank_regcode": null,
+     *  "beneficiary_name": null,
+     *  "cl_banks_id": 1,
+     *  "clients_id": 56,
+     *  "credit_limit": null,
+     *  "day_limit": null,
+     *  "default_salary_account": true,
+     *  "iban_code": "EE123456780012345678",
+     *  "id": 16,
+     *  "show_in_sale_invoices": true,
+     *  "start_sum": null,
+     *  "swift_code": "HABAEE2X"
      * } $parameters
      *
      * @return mixed
@@ -67,6 +84,63 @@ class Bank extends AbstractAPI
         $response = $this->client->request(
             'POST',
             'bank_accounts',
+            [],
+            $parameters
+        );
+
+        return $response;
+    }
+
+    /**
+     * Modify one specific invoice series of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/patch-invoice_series_one
+     *
+     * @param array<string,mixed>|array{
+     *  "account_name_eng": "Swedbank AS EE123456780012345678",
+     *  "account_name_est": "Swedbank AS EE123456780012345678",
+     *  "account_no": "EE123456780012345678",
+     *  "accounts_dimensions_id": 2,
+     *  "bank_name": null,
+     *  "bank_regcode": null,
+     *  "beneficiary_name": null,
+     *  "cl_banks_id": 1,
+     *  "clients_id": 56,
+     *  "credit_limit": null,
+     *  "day_limit": null,
+     *  "default_salary_account": true,
+     *  "iban_code": "EE123456780012345678",
+     *  "id": 16,
+     *  "show_in_sale_invoices": true,
+     *  "start_sum": null,
+     *  "swift_code": "HABAEE2X"
+     * } $parameters
+     *
+     * @return mixed
+     */
+    public function update( int $id, array $parameters ): mixed {
+
+        $missingParameters = array_diff_key(
+            array_flip(
+                [
+                    'account_name_est',
+                    'account_no',
+                ]
+            ),
+            $parameters
+        );
+
+        if ( count( $missingParameters ) !== 0 ) {
+            $missingKeys = implode( ', ', array_keys( $missingParameters ) );
+
+            throw new \InvalidArgumentException(
+                "Missing required parameter(s): $missingKeys"
+            );
+        }
+
+        $response = $this->client->request(
+            'PATCH',
+            'bank_accounts/' . $id,
             [],
             $parameters
         );
