@@ -99,7 +99,8 @@ class Invoices extends AbstractAPI
      *
      * @return mixed
      */
-    public function update( int $id, array $parameters ): mixed {
+    public function update( int $id, array $parameters ): mixed
+    {
 
         $missingParameters = array_diff_key(
             array_flip(
