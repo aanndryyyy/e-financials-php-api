@@ -164,4 +164,19 @@ class Bank extends AbstractAPI
 
         return $response;
     }
+
+    /**
+     * Retrieve the VAT information of the specified company.
+     *
+     * @see https://rmp-api.rik.ee/api.html#operation/get-vat_info
+     *
+     * @return mixed
+     */
+    public function getVatInfo(): mixed
+    {
+
+        $response = $this->client->request( 'GET', 'vat_info' );
+
+        return $response;
+    }
 }
